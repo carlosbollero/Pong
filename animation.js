@@ -12,7 +12,7 @@ const PADDLE_2_POS_X = 800 - (PADDLE_PADDING + PADDLE_WIDHT);
 var paddlePosY = 250;
 var paddle2PosY = 250;
 
-const BALLRADIUS = 5;
+const BALLRADIUS = 7;
 var ballWidth = 10;
 var ballHeight = 10;
 var ballRadius = 5;
