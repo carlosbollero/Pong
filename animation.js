@@ -60,17 +60,22 @@ function moveBall() {
     ballPosX = ballPosX + ballSpeedX;
     ballPosY = ballPosY + ballSpeedY;
     
-    if (ballPosX > canvas.width - ballWidth){
+    if (ballPosX > canvas.width - ballRadius){
         ballSpeedX = -ballSpeedX;
-    }
-    
-    if ((ballPosX - ballRadius <= PADDLE_POS_X + PADDLE_WIDHT) && ((ballPosY > paddlePosY) && (ballPosY < paddlePosY + PADDLE_HEIGHT))){
-        ballSpeedX = -ballSpeedX;
+        ballReset();
     }
     
     if ( ballPosX < 0 + ballRadius) {
         ballSpeedX = -ballSpeedX;
         ballReset();
+    }
+    
+    if ((ballPosX + ballRadius >= PADDLE_2_POS_X) && ((ballPosY > paddle2PosY) && (ballPosY < paddle2PosY + PADDLE_HEIGHT))){
+        ballSpeedX = -ballSpeedX;   
+    }
+    
+    if ((ballPosX - ballRadius <= PADDLE_POS_X + PADDLE_WIDHT) && ((ballPosY > paddlePosY) && (ballPosY < paddlePosY + PADDLE_HEIGHT))){
+        ballSpeedX = -ballSpeedX;
     }
     
     if (ballPosY > canvas.height - ballHeight){
