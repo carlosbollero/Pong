@@ -12,10 +12,7 @@ const PADDLE_2_POS_X = 800 - (PADDLE_PADDING + PADDLE_WIDHT);
 var paddlePosY = 250;
 var paddle2PosY = 250;
 
-const BALLRADIUS = 7;
-var ballWidth = 10;
-var ballHeight = 10;
-var ballRadius = 5;
+const BALL_RADIUS = 7;
 var ballPosX;
 var ballPosY;
 var ballSpeedX = 5;
@@ -24,8 +21,7 @@ var ballSpeedY = 5;
 function drawBall() {
     
     console.log("pos (" + ballPosX + "," + ballPosY + ")");
-    console.log("size : " + ballWidth + "x" + ballHeight);
-    drawCircle(ballPosX, ballPosY, BALLRADIUS, 'green');
+    drawCircle(ballPosX, ballPosY, BALL_RADIUS, 'green');
 }
 
 function drawCircle(centerX, centerY, radius, color){
@@ -57,32 +53,41 @@ function draw() {
 
 function moveBall() {
     
-    ballPosX = ballPosX + ballSpeedX;
-    ballPosY = ballPosY + ballSpeedY;
+    ballPosX += ballSpeedX;
+    ballPosY += ballSpeedY;
     
-    if (ballPosX > canvas.width - ballRadius){
+    if (ballPosX > canvas.width - BALL_RADIUS){
         ballSpeedX = -ballSpeedX;
         ballReset();
     }
     
-    if ( ballPosX < 0 + ballRadius) {
+    if ( ballPosX < 0 + BALL_RADIUS) {
         ballSpeedX = -ballSpeedX;
         ballReset();
     }
     
-    if ((ballPosX + ballRadius >= PADDLE_2_POS_X) && ((ballPosY > paddle2PosY) && (ballPosY < paddle2PosY + PADDLE_HEIGHT))){
+    if ((ballPosX + BALL_RADIUS >= PADDLE_2_POS_X) && ((ballPosY > paddle2PosY) && (ballPosY < paddle2PosY + PADDLE_HEIGHT))){
         ballSpeedX = -ballSpeedX;   
     }
     
-    if ((ballPosX - ballRadius <= PADDLE_POS_X + PADDLE_WIDHT) && ((ballPosY > paddlePosY) && (ballPosY < paddlePosY + PADDLE_HEIGHT))){
+    if ((ballPosX - BALL_RADIUS <= PADDLE_POS_X + PADDLE_WIDHT) && ((ballPosY > paddlePosY) && (ballPosY < paddlePosY + PADDLE_HEIGHT))){
         ballSpeedX = -ballSpeedX;
     }
     
-    if (ballPosY > canvas.height - ballHeight){
+    if (ballPosY > canvas.height - BALL_RADIUS){
         ballSpeedY = -ballSpeedY;
     }
-    if (ballPosY < 0 + ballHeight){
+    if (ballPosY < 0 + BALL_RADIUS){
         ballSpeedY = -ballSpeedY;   
+    }
+}
+
+function AIBallMovement(){
+    var paddle2YCenter = paddle2PosY + PADDLE_HEIGHT/2;
+    if (paddle2YCenter < ballPosY){
+        paddle2PosY += 10;
+    }else{
+        paddle2PosY -= 10;
     }
 }
 
@@ -106,6 +111,7 @@ function getMousePos(event){
 
 function update() {
     moveBall();
+    AIBallMovement();
     draw();
 }
 
