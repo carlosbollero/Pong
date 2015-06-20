@@ -6,8 +6,11 @@ const FRAMESPERSECOND = 50;
 
 const PADDLE_HEIGHT = 100;
 const PADDLE_WIDHT = 10;
-const PADDLEPOSX = 7;
+const PADDLE_PADDING = 20;
+const PADDLE_POS_X = 0 + PADDLE_PADDING;
+const PADDLE_2_POS_X = 800 - (PADDLE_PADDING + PADDLE_WIDHT);
 var paddlePosY = 250;
+var paddle2PosY = 250;
 
 const BALLRADIUS = 5;
 var ballWidth = 10;
@@ -37,7 +40,8 @@ function drawScenario() {
 }
 
 function drawPaddles(){
-    drawRect(PADDLEPOSX, paddlePosY, PADDLE_WIDHT, PADDLE_HEIGHT, 'white');   
+    drawRect(PADDLE_POS_X, paddlePosY, PADDLE_WIDHT, PADDLE_HEIGHT, 'white');
+    drawRect(PADDLE_2_POS_X, paddle2PosY, PADDLE_WIDHT, PADDLE_HEIGHT, 'white');
 }
 
 function drawRect(x, y, width, height, color) {
@@ -59,8 +63,14 @@ function moveBall() {
     if (ballPosX > canvas.width - ballWidth){
         ballSpeedX = -ballSpeedX;
     }
-    if ( ballPosX < 0 + ballWidth) {
-        ballSpeedX = -ballSpeedX;   
+    
+    if ((ballPosX - ballRadius <= PADDLE_POS_X + PADDLE_WIDHT) && ((ballPosY > paddlePosY) && (ballPosY < paddlePosY + PADDLE_HEIGHT))){
+        ballSpeedX = -ballSpeedX;
+    }
+    
+    if ( ballPosX < 0 + ballRadius) {
+        ballSpeedX = -ballSpeedX;
+        ballReset();
     }
     
     if (ballPosY > canvas.height - ballHeight){
@@ -69,6 +79,11 @@ function moveBall() {
     if (ballPosY < 0 + ballHeight){
         ballSpeedY = -ballSpeedY;   
     }
+}
+
+function ballReset() {
+    ballPosX = canvas.width / 2;
+    ballPosY = canvas.height / 2;
 }
 
 function getMousePos(event){
@@ -95,8 +110,7 @@ window.onload = function () {
     canvas = document.getElementById('gameCanvas');
     canvasContext =  canvas.getContext('2d');
     
-    ballPosX = canvas.width / 2 - ballWidth / 2;
-    ballPosY = canvas.height / 2 - ballHeight / 2;
+    ballReset();
     
     /*update();*/
     setInterval(update, 1000 / FRAMESPERSECOND);
