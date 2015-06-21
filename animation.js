@@ -1,6 +1,8 @@
 
 var canvas;
 var canvasContext;
+/*var canvasWidht = window.innerWidth;
+var canvasHeight = window.innerHeight;*/
 
 const FRAMESPERSECOND = 50;
 
@@ -9,19 +11,27 @@ const PADDLE_WIDHT = 10;
 const PADDLE_PADDING = 20;
 const PADDLE_POS_X = 0 + PADDLE_PADDING;
 const PADDLE_2_POS_X = 800 - (PADDLE_PADDING + PADDLE_WIDHT);
+/*const PADDLE_2_POS_X = canvasWidht - (PADDLE_PADDING + PADDLE_WIDHT);*/
 var paddlePosY = 250;
 var paddle2PosY = 250;
 
 const BALL_RADIUS = 7;
+const BALL_INITAL_X_SPEED = 8;
+const BALL_INITAL_Y_SPEED = 5;
 var ballPosX;
 var ballPosY;
-var ballSpeedX = 5;
-var ballSpeedY = 5;
+var ballSpeedX;
+var ballSpeedY;
+
+var points = 0;
+
+
 
 function drawBall() {
     
     console.log("pos (" + ballPosX + "," + ballPosY + ")");
     drawCircle(ballPosX, ballPosY, BALL_RADIUS, 'green');
+    
 }
 
 function drawCircle(centerX, centerY, radius, color){
@@ -31,8 +41,18 @@ function drawCircle(centerX, centerY, radius, color){
     canvasContext.fill();
 }
 
-function drawScenario() {
+function drawField() {
     drawRect(0, 0, canvas.width, canvas.height, 'black');
+    drawRect(canvas.width/2,0,1,canvas.height,'white');
+}
+
+function drawScorer() {
+    canvasContext.fillStlye = "white";
+	canvasContext.font = "16px Arial, sans-serif";
+	canvasContext.textAlign = "left";
+	canvasContext.textBaseline = "top";
+	canvasContext.fillText("Score: " + points, 20, 20 );
+    console.log("hey");
 }
 
 function drawPaddles(){
@@ -46,7 +66,9 @@ function drawRect(x, y, width, height, color) {
 }
 
 function draw() {
-    drawScenario();
+    
+    drawField();
+    drawScorer();
     drawPaddles();
     drawBall();
 }
@@ -72,6 +94,7 @@ function moveBall() {
     
     if ((ballPosX - BALL_RADIUS <= PADDLE_POS_X + PADDLE_WIDHT) && ((ballPosY > paddlePosY) && (ballPosY < paddlePosY + PADDLE_HEIGHT))){
         ballSpeedX = -ballSpeedX;
+        ballSpeedX++;
     }
     
     if (ballPosY > canvas.height - BALL_RADIUS){
@@ -82,18 +105,20 @@ function moveBall() {
     }
 }
 
-function AIBallMovement(){
+function AIPaddleMovement(){
     var paddle2YCenter = paddle2PosY + PADDLE_HEIGHT/2;
-    if (paddle2YCenter < ballPosY){
-        paddle2PosY += 10;
-    }else{
-        paddle2PosY -= 10;
+    if (paddle2YCenter < ballPosY - 35){
+        paddle2PosY += 5;
+    }else if (paddle2YCenter > ballPosY + 35){
+        paddle2PosY -= 5;
     }
 }
 
 function ballReset() {
     ballPosX = canvas.width / 2;
     ballPosY = canvas.height / 2;
+    ballSpeedX = BALL_INITAL_X_SPEED;
+    ballSpeedY = BALL_INITAL_Y_SPEED;
 }
 
 function getMousePos(event){
@@ -110,8 +135,10 @@ function getMousePos(event){
 }
 
 function update() {
+    canvasContext.font="20px Georgia";
+    canvasContext.fillText("Hello World!",10,50);
     moveBall();
-    AIBallMovement();
+    AIPaddleMovement();
     draw();
 }
 
@@ -120,6 +147,9 @@ window.onload = function () {
     console.log('init');
     canvas = document.getElementById('gameCanvas');
     canvasContext =  canvas.getContext('2d');
+    
+/*    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;*/
     
     ballReset();
     
