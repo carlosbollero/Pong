@@ -80,12 +80,14 @@ function moveBall() {
     
     if (ballPosX > canvas.width - BALL_RADIUS){
         ballSpeedX = -ballSpeedX;
-        ballReset();
+        /*ballReset();*/
+        resetGame();
     }
     
     if ( ballPosX < 0 + BALL_RADIUS) {
         ballSpeedX = -ballSpeedX;
-        ballReset();
+        /*ballReset();*/
+        resetGame();
     }
     
     if ((ballPosX + BALL_RADIUS >= PADDLE_2_POS_X) && ((ballPosY > paddle2PosY) && (ballPosY < paddle2PosY + PADDLE_HEIGHT))){
@@ -95,6 +97,7 @@ function moveBall() {
     if ((ballPosX - BALL_RADIUS <= PADDLE_POS_X + PADDLE_WIDHT) && ((ballPosY > paddlePosY) && (ballPosY < paddlePosY + PADDLE_HEIGHT))){
         ballSpeedX = -ballSpeedX;
         ballSpeedX++;
+        points++;
     }
     
     if (ballPosY > canvas.height - BALL_RADIUS){
@@ -119,6 +122,15 @@ function ballReset() {
     ballPosY = canvas.height / 2;
     ballSpeedX = BALL_INITAL_X_SPEED;
     ballSpeedY = BALL_INITAL_Y_SPEED;
+}
+
+function scorerReset(){
+    points = 0;
+}
+
+function resetGame(){
+    ballReset();
+    scorerReset();
 }
 
 function getMousePos(event){
@@ -151,7 +163,8 @@ window.onload = function () {
 /*    canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;*/
     
-    ballReset();
+    
+    resetGame();
     
     /*update();*/
     setInterval(update, 1000 / FRAMESPERSECOND);
