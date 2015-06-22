@@ -56,7 +56,7 @@ function drawScorer() {
 	canvasContext.font = "16px Arial, sans-serif";
 	canvasContext.textAlign = "left";
 	canvasContext.textBaseline = "top";
-	canvasContext.fillText("Score: " + points, 40, 30 );
+	canvasContext.fillText("Score: " + points, 60, 30 );
     console.log("hey");
 }
 
