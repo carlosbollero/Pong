@@ -85,7 +85,6 @@ function moveBall() {
     
     if (ballPosX > canvas.width - BALL_RADIUS){
         ballSpeedX = -ballSpeedX;
-        /*ballReset();*/
         gameReset();
     }
     
