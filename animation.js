@@ -11,7 +11,6 @@ const PADDLE_WIDHT = 10;
 const PADDLE_PADDING = 20;
 const PADDLE_POS_X = 0 + PADDLE_PADDING;
 const PADDLE_2_POS_X = 800 - (PADDLE_PADDING + PADDLE_WIDHT);
-/*const PADDLE_2_POS_X = canvasWidht - (PADDLE_PADDING + PADDLE_WIDHT);*/
 var paddlePosY = 250;
 var paddle2PosY = 250;
 
@@ -51,7 +50,7 @@ function drawScorer() {
 	canvasContext.font = "16px Arial, sans-serif";
 	canvasContext.textAlign = "left";
 	canvasContext.textBaseline = "top";
-	canvasContext.fillText("Score: " + points, 20, 20 );
+	canvasContext.fillText("Score: " + points, 40, 20 );
     console.log("hey");
 }
 
@@ -81,13 +80,12 @@ function moveBall() {
     if (ballPosX > canvas.width - BALL_RADIUS){
         ballSpeedX = -ballSpeedX;
         /*ballReset();*/
-        resetGame();
+        gameReset();
     }
     
     if ( ballPosX < 0 + BALL_RADIUS) {
         ballSpeedX = -ballSpeedX;
-        /*ballReset();*/
-        resetGame();
+        gameReset();
     }
     
     if ((ballPosX + BALL_RADIUS >= PADDLE_2_POS_X) && ((ballPosY > paddle2PosY) && (ballPosY < paddle2PosY + PADDLE_HEIGHT))){
@@ -128,7 +126,7 @@ function scorerReset(){
     points = 0;
 }
 
-function resetGame(){
+function gameReset(){
     ballReset();
     scorerReset();
 }
@@ -147,8 +145,6 @@ function getMousePos(event){
 }
 
 function update() {
-    canvasContext.font="20px Georgia";
-    canvasContext.fillText("Hello World!",10,50);
     moveBall();
     AIPaddleMovement();
     draw();
@@ -164,7 +160,7 @@ window.onload = function () {
     canvas.height = window.innerHeight;*/
     
     
-    resetGame();
+    gameReset();
     
     /*update();*/
     setInterval(update, 1000 / FRAMESPERSECOND);
