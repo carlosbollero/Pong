@@ -42,7 +42,13 @@ function drawCircle(centerX, centerY, radius, color){
 
 function drawField() {
     drawRect(0, 0, canvas.width, canvas.height, 'black');
-    drawRect(canvas.width/2,0,1,canvas.height,'white');
+    for (var i = 0; i < canvas.height / 20; i++){
+        var height = canvas.height /20 - 15;
+        var lastPos = i * canvas.height / 20;
+        
+        drawRect(canvas.width/2,lastPos,1,height,'white');
+        
+    }
 }
 
 function drawScorer() {
@@ -50,7 +56,7 @@ function drawScorer() {
 	canvasContext.font = "16px Arial, sans-serif";
 	canvasContext.textAlign = "left";
 	canvasContext.textBaseline = "top";
-	canvasContext.fillText("Score: " + points, 40, 20 );
+	canvasContext.fillText("Score: " + points, 40, 30 );
     console.log("hey");
 }
 
