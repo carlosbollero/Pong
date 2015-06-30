@@ -41,13 +41,17 @@ function drawCircle(centerX, centerY, radius, color){
 
 }
 
-function drawField() {
-    drawRect(0, 0, canvas.width, canvas.height, 'black');
+function drawNet() {
     for (var i = 0; i < canvas.height / 20; i++){
         var height = canvas.height /20 - 15;
         var lastPos = i * canvas.height / 20;        
         drawRect(canvas.width/2,lastPos,1,height,'white');        
-    }
+    }    
+}
+
+function drawField() {
+    drawRect(0, 0, canvas.width, canvas.height, 'black');
+    drawNet();
 }
 
 function drawScorer() {
@@ -93,12 +97,12 @@ function moveBall() {
         ballSpeedX = -ballSpeedX;   
     }
 
-    if (ballPosX + BALL_RADIUS > canvas.width ){
+    if (ballPosX > canvas.width ){
         ballSpeedX = -ballSpeedX;
         gameReset();
     }
     
-    if ( ballPosX - BALL_RADIUS < 0) {
+    if ( ballPosX < 0) {
         ballSpeedX = -ballSpeedX;
         gameReset();
     }
@@ -132,7 +136,6 @@ function ballReset() {
     if (Math.random() > 0.5) {
         ballSpeedY = -ballSpeedY;
     }
-
 }
 
 function scorerReset(){
